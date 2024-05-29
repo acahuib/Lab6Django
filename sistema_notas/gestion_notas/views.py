@@ -15,4 +15,26 @@ def nuevo_alumno(request):
     else:
         form = AlumnoForm()
     return render(request, 'nuevo_alumno.html', {'form': form})
+def nuevo_curso(request):
+    if request.method == "POST":
+        form = CursoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_cursos')
+    else:
+        form = CursoForm()
+    return render(request, 'nuevo_curso.html', {'form': form})
 
+def listar_notas(request):
+    notas = NotasAlumnosPorCurso.objects.all()
+    return render(request, 'listar_notas.html', {'notas': notas})
+
+def nueva_nota(request):
+    if request.method == "POST":
+        form = NotasAlumnosPorCursoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('listar_notas')
+    else:
+        form = NotasAlumnosPorCursoForm()
+    return render(request, 'nueva_nota.html', {'form': form})
